@@ -1,0 +1,92 @@
+/* Linotte Font Type */
+@font-face {
+  font-family: "Linotte";
+  font-style: normal;
+  font-weight: 300;
+  src: url(fonts/Linotte-light.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Linotte";
+  font-style: normal;
+  font-weight: 400;
+  src: url(fonts/Linotte-regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Linotte";
+  font-style: normal;
+  font-weight: 500;
+  src: url(fonts/Linotte-semibold.ttf) format("truetype");
+}
+
+.lightbox-img-thumbnail {
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  border-radius: 2px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .lightbox-img-thumbnail:hover {
+    box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  color: inherit;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #6A7C95;
+  -webkit-box-shadow: 0 0 0px 1000px #FFF inset;
+  // transition: background-color 5000s ease-in-out 0s;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  color: inherit;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0px;
+    width: 100%;
+    background: #fbfdff;
+  }
+input[type="button" i], input[type="submit" i], input[type="reset" i], input[type="file" i]::-webkit-file-upload-button, button {
+    padding: 0;
+  }
+input {
+    -webkit-appearance: none;
+    background-color: white;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    padding: 0;
+    border: none;
+}

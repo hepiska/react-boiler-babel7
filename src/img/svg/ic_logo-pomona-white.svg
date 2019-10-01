@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="38px" viewBox="0 0 38 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Logo</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="17" cy="17" r="17"></circle>
+        <filter x="-10.3%" y="-7.4%" width="120.6%" height="120.6%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.646524235   0 0 0 0 0.646524235   0 0 0 0 0.646524235  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Cornetto" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1.-Cornetto-Web---Landing-Page-BG-Revision" transform="translate(-336.000000, -17.000000)">
+            <g id="Navigation/Top" transform="translate(307.000000, 17.000000)">
+                <g id="logo_blue" transform="translate(31.000000, 1.000000)">
+                    <g id="Logo">
+                        <g id="Points">
+                            <g id="Oval">
+                                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                            </g>
+                            <path d="M17.3541667,8.5 C13.246545,8.5 9.91666667,11.846771 9.91666667,15.9752308 L9.91666667,18.4571116 L9.91666667,21.2965816 L9.91666667,26.7059387 L10.2266569,26.7059387 C12.7234366,26.5514218 14.721263,24.5437132 14.875,22.0342672 L14.875,21.7839042 C14.8727355,21.7457175 14.8697161,21.3345154 14.8666967,21.2965816 L14.875,21.66985 L14.875,15.988887 L14.8752516,15.988887 C14.8752516,15.9843349 14.875,15.9797829 14.875,15.9752308 C14.875,14.5992462 15.9848756,13.4834872 17.3541667,13.4834872 L19.8333333,13.4834872 L19.8333333,15.9752308 C19.8333333,17.3514684 18.7234577,18.4669744 17.3541667,18.4669744 C17.2832111,18.4669744 17.2130104,18.4634339 17.1435646,18.4573645 L16.0862766,18.4573645 L16.0862766,23.4507145 L17.1435646,23.4507145 L17.1435646,23.4474269 C17.2135137,23.4494501 17.2837144,23.4507145 17.3541667,23.4507145 C21.4617883,23.4507145 24.7916667,20.1036906 24.7916667,15.9752308 L24.7916667,13.4834872 L24.7916667,11.8323562 L24.7916667,8.5 L17.3541667,8.5 Z" id="Fill-4" fill="#37A0F4"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -104,6 +104,11 @@
     "node": true,
     "jest": true
   },
+  "globals": {
+    "CONF_BASE_URL": true,
+    "CONF_POMONA_WEB": true,
+    "CONF_NODE_ENV": true
+  },
   "settings": {
     "import/resolver": {
       "babel-module": {},
