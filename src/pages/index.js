@@ -9,6 +9,8 @@ import { colors } from '@pomona/pomona3-ui/lib/constants'
 import LoginPage from 'pages/login'
 import MainPage from 'pages/main'
 import UnAuthRedirect from 'hoc/unAuthRedirect'
+import AuthRedirect from 'hoc/authRedirect'
+
 import Header from 'molecules/header'
 
 
@@ -24,25 +26,25 @@ const Container = styled.div`
   padding: 24px 20%;
 `
 
-const RenderAuthComponent = () => (
-  <Route
-    render={(matchProps) => (
-      <MainPage {...matchProps} />
-    )}
-  />
-)
-
 const Pages = () => (
   <Container id="indexPage">
     <Header />
     <Switch>
-      <Route path="/login" component={LoginPage} />
-      {/* this have to be last */}
+      <Route exact path="/login" component={LoginPage} />
       <UnAuthRedirect
         path="/"
-        AuthComponent={RenderAuthComponent}
+        UnAuthComponent={(
+          <Route
+            path='/'
+            render={(matchProps) => (
+              <MainPage {...matchProps} />
+            )}
+          />
+        )}
         redirecTo='/login'
       />
+      {/* this have to be last */}
+
     </Switch>
   </Container>
 )

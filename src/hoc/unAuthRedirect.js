@@ -2,10 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
-const UnAuthRedirect = ({ AuthComponent, redirecTo, isAuth, ...props }) => {
+const UnAuthRedirect = ({ UnAuthComponent, redirecTo, isAuth, ...props }) => {
   if (isAuth) {
     return (
-      <AuthComponent {...props} />
+      UnAuthComponent
     )
   }
   return <Redirect to={redirecTo} />

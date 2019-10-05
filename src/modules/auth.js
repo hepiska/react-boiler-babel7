@@ -24,9 +24,6 @@ export default (state = initialState, action) => {
       localStorage.setItem('email', action.payload.email)
       localStorage.setItem('name', action.payload.profile.first_name)
       newState = action.payload
-      // window.dataLayer.push({
-      //   event: 'loginPositif',
-      // })
       return newState
     case type.LOGOUT:
 
@@ -34,8 +31,6 @@ export default (state = initialState, action) => {
       localStorage.removeItem('_id')
       localStorage.removeItem('email')
       localStorage.removeItem('name')
-      // window.location.reload()
-      // clearGoogleApi(GOOGLE_APP_ID)
       return {
         isAuth: false,
       }

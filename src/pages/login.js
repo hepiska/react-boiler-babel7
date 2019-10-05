@@ -1,32 +1,35 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { LOGIN } from 'modules/auth'
 import Font from '@pomona/pomona3-ui/lib/atoms/fonts'
 import Fields from '@pomona/pomona3-ui/lib/atoms/fields'
-import { Wrapper, ImageWrapper, PlainLink } from '@pomona/pomona3-ui/lib/atoms/basic'
+import { Login } from 'graphqlQuery/auth.gql'
+import { Wrapper, PlainLink } from '@pomona/pomona3-ui/lib/atoms/basic'
 import { shadows, colors } from '@pomona/pomona3-ui/lib/constants'
 import Button from '@pomona/pomona3-ui/lib/atoms/buttons'
 import FormValidation from '@pomona/pomona3-ui/lib/molecules/formValidation'
+import { useMutation } from '@apollo/react-hooks'
 import SystemIcons from '@pomona/pomona3-ui/lib/atoms/systemIcons'
 import Loader from 'molecules/loaders/circle'
+import authRedirect from 'hoc/authRedirect'
 
-
-
-
-
-const LoginPage = () => {
+const LoginPage = (props) => {
   const [showPassword, setShowPassword] = useState(false)
   const [childChange, setChildChange] = useState(false)
   const [fetching, setFetching] = useState(false)
-  const [errorMessage, setErrorMessage] = useState(false)
-
+  const [loginMutate, { error }] = useMutation(Login)
 
   const onSubmitForm = async (data) => {
     if (data.type === 'valid') {
       setFetching(true)
-      setErrorMessage(false)
       try {
+        const loginRes = await loginMutate({ variables: { input: { ...data.data } } })
+        props.LOGIN({ ...loginRes.data.Login, isAuth: true })
+        props.history.push('/')
+
         setFetching(false)
       } catch (err) {
-        setErrorMessage(true)
         setFetching(false)
         throw err
       }
@@ -35,7 +38,7 @@ const LoginPage = () => {
 
   return (
     <Wrapper width='100%' height='100vh' overflow='hidden'>
-      <Wrapper width='380px' height='380px' shadow={shadows.idle} justify='flex-start' radius='12px' padding='24px 48px'>
+      <Wrapper width='320px' height='380px' shadow={shadows.idle} justify='flex-start' dWidth='380px' radius='12px' dPadding='24px 48px' padding='24px 24px'>
         <Font size='36px' weightType='semibold' margin='0 0 16px'>Login</Font>
         {
           fetching ? (
@@ -107,7 +110,7 @@ const LoginPage = () => {
 
       </Wrapper>
       {
-        errorMessage && (
+        error && error.message && (
           <Wrapper width='100%' align='center' margin='16px 0'>
             <Font color={colors.redError}>* invalid username or password</Font>
           </Wrapper>
@@ -117,5 +120,14 @@ const LoginPage = () => {
   )
 }
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      LOGIN,
+    },
+    dispatch,
+  )
 
-export default LoginPage
+
+
+export default connect(null, mapDispatchToProps)(authRedirect('/', LoginPage))

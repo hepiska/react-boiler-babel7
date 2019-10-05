@@ -3,7 +3,8 @@ import React from 'react'
 
 
 
-const LoginPage = () => {
+const MainPage = () => {
+  console.log('render')
   return (
     <div>
       main page
@@ -12,4 +13,4 @@ const LoginPage = () => {
 }
 
 
-export default LoginPage
+export default MainPage
