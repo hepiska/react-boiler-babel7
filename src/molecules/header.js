@@ -4,6 +4,7 @@ import { shadows } from '@pomona/pomona3-ui/lib/constants'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { LOGOUT } from 'modules/auth'
+import { withRouter } from "react-router-dom"
 import { ImageWrapper, Wrapper } from '@pomona/pomona3-ui/lib/atoms/basic'
 import SystemIcons from '@pomona/pomona3-ui/lib/atoms/systemIcons'
 import FullSizeOptionList from 'molecules/fullSizeOptionList'
@@ -36,17 +37,10 @@ const useModal = (init) => {
   return [{ isOpen }, { openModal, closeModal }]
 }
 
-const AbsWrapper = styled(Wrapper)`
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-
-`
 
 
 const Header = ({ isAuth, LOGOUT: logout, ...props }) => {
-  const [modalState, modalAction] = useModal(true)
-  console.log(isAuth)
+  const [modalState, modalAction] = useModal(false)
   return (
     <HeaderWrapper>
       <Wrapper width='100%' direction='row' justify='space-between'>
@@ -67,7 +61,10 @@ const Header = ({ isAuth, LOGOUT: logout, ...props }) => {
         onClose={modalAction.closeModal}
         position='right'
       >
-        <FullSizeOptionList options={[{ name: 'Popular', value: 'popular' }]} />
+        <FullSizeOptionList
+          onOptionClick={(_, option) => props.history.push(option.value)}
+          options={[{ name: 'Create Alias', value: '/' }, { name: 'Report', value: '/report' }]}
+        />
         <Button size='full' radius='0px' margin='32px 0px 0px' onClick={logout}>logout</Button>
 
       </SidebarMenu>
@@ -86,4 +83,4 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch,
   )
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header))

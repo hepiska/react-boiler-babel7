@@ -3,13 +3,11 @@ import styled from 'styled-components'
 import {
   Switch,
   Route,
-  Redirect
 } from 'react-router-dom'
 import { colors } from '@pomona/pomona3-ui/lib/constants'
 import LoginPage from 'pages/login'
 import MainPage from 'pages/main'
 import UnAuthRedirect from 'hoc/unAuthRedirect'
-import AuthRedirect from 'hoc/authRedirect'
 
 import Header from 'molecules/header'
 
