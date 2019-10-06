@@ -18,10 +18,11 @@ const HeaderWrapper = styled.header`
     padding:16px 24px;
   }
   width:100%;
-  padding: 16px 20%;
+  padding: 16px 15%;
   position:fixed;
   top:0;
   left:0;
+  background:white;
   box-shadow: ${shadows.idle};
 `
 
