@@ -12,11 +12,13 @@ import stringSimilarity from 'string-similarity'
 
 const AbsWrapper = styled(Wrapper)`
     right: 2px;
+    z-index:0;
     top: 2px;
 `
 
 const useStringInputAlias = (predictedAlias) => {
   const [corectedAlias, setCoredtedAlias] = useState('')
+  const [isHaveSearch, setIsHaveSearch] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [loading, setLoading] = useState(false)
 
@@ -32,14 +34,15 @@ const useStringInputAlias = (predictedAlias) => {
     setSelectedProduct(data)
   }
 
-  return [{ corectedAlias, selectedProduct, loading }, { chackIsSimilar, changeCorectedAlias, getSelectedData, setLoading }]
+  return [{ corectedAlias, selectedProduct, loading, isHaveSearch },
+  { chackIsSimilar, changeCorectedAlias, getSelectedData, setLoading, setIsHaveSearch }]
 
 }
 
 
-const SelectProductCard = ({ product, retailer, getData, onError, checked, ...props }) => {
-  const [{ corectedAlias, selectedProduct, loading },
-    { changeCorectedAlias, chackIsSimilar, getSelectedData, setLoading
+const SelectProductCard = ({ product, retailer, getData, onError, onRemoveProduct, checked, ...props }) => {
+  const [{ corectedAlias, selectedProduct, loading, isHaveSearch },
+    { changeCorectedAlias, chackIsSimilar, getSelectedData, setLoading, setIsHaveSearch
     }] = useStringInputAlias(product.name)
 
   const checkProductInRetailer = () => props.client.query({
@@ -73,8 +76,6 @@ const SelectProductCard = ({ product, retailer, getData, onError, checked, ...pr
         }
       })
       setLoading(false)
-
-
     } catch (error) {
       onError(error)
       setLoading(false)
@@ -82,8 +83,15 @@ const SelectProductCard = ({ product, retailer, getData, onError, checked, ...pr
     }
   }
 
+  const onClose = () => {
+    onRemoveProduct(product)
+  }
+
 
   const fetchProduct = (limit, skip, searchkey) => {
+    if (searchkey && searchkey.length > 5 && !isHaveSearch) {
+      setIsHaveSearch(true)
+    }
     return props.client.query({
       query: GetAllProduct,
       variables: {
@@ -99,9 +107,8 @@ const SelectProductCard = ({ product, retailer, getData, onError, checked, ...pr
   }
 
 
-
   return (
-    <Wrapper width='100%' position='relative' padding='12px 0px' direction='row' justify='space-between' margin='12px 0px' shadow={shadows.idle}>
+    <Wrapper width='100%' position='relative' padding='12px 0px' background='white' direction='row' justify='space-between' margin='12px 0px' shadow={shadows.idle}>
       {
         checked && (
           <AbsWrapper position='absolute'>
@@ -127,7 +134,11 @@ const SelectProductCard = ({ product, retailer, getData, onError, checked, ...pr
           <Wrapper padding='0px 8px' cursor='pointer'>
             {!loading ? (
               <React.Fragment>
-                <SystemIcons name='close' margin='8px 0px' />
+                {isHaveSearch && (
+                  <Wrapper onClick={onClose}>
+                    <SystemIcons name='close' margin='8px 0px' />
+                  </Wrapper>
+                )}
                 <Button size='content' padding='8px' margin='8px 0px' onClick={onCheck}>Check</Button>
               </React.Fragment>
             ) : <ImageWrapper width='24px' height='24px' src={require('img/svg/loaderEclipse.svg')} />

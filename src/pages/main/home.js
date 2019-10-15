@@ -19,8 +19,13 @@ const HomePage = () => {
   const [localError, setLocalError] = useState(null)
   const [aliasResponse, setAliasResponse] = useState(null)
   const [aliasesInput, setAliasesInput] = useState([])
+  const [deletedProduct, setDeletedProduct] = useState([])
+
   const [createAlias] = useMutation(CreateAliasByManager)
-  const { loading, error, data } = useQuery(GetUnAliasedReceipt, { variables: { input: dateConstant } })
+  const { loading, error, data, refetch } = useQuery(GetUnAliasedReceipt, {
+    fetchPolicy: 'network-only',
+    variables: { input: dateConstant }
+  })
 
   if (loading) {
     return (
@@ -46,6 +51,11 @@ const HomePage = () => {
   }
   const onSubmit = async () => {
     try {
+      const resAlias = receipt.prediction.products.length - aliasesInput.length
+      if (deletedProduct.length - resAlias !== 0) {
+        throw new Error('Proses semua alias sebelum melakukan submit')
+      }
+
       const aliasData = aliasesInput.map(al => ({
         product: al.product._id,
         retailer: receipt.retailer._id,
@@ -73,7 +83,14 @@ const HomePage = () => {
   const closeModal = () => {
     setLocalError(null)
   }
+
+  const onDeleteProduct = (product) => {
+    // need to call backend to set data on redis
+    setDeletedProduct([...deletedProduct, product])
+  }
+
   const closeResponse = () => {
+    refetch()
     setAliasResponse(null)
   }
   return (
@@ -97,12 +114,16 @@ const HomePage = () => {
             width='100%'
             margin='12px 0px'
             dPadding='0px 8px'
+            padding='0px 1px'
             overflow='scroll'
+            zIndex='0'
             justify='flex-start'
           >
             {
-              receipt.prediction.products.map(product => (
+              receipt.prediction.products.filter(prod => !deletedProduct.find(delProd => delProd._id === prod._id)).map(product => (
                 <SelectProductCard
+                  onRemoveProduct={onDeleteProduct}
+                  key={product._id}
                   id={product._id}
                   checked={aliasesInput.find(al => al.alias.predicted === product.name)}
                   product={product}
