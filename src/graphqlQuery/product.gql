@@ -1,0 +1,21 @@
+  query GetAllProduct ($input: GetAllProductInput!) {
+    GetAllProduct(input: $input) {
+      products{
+      name
+      _id
+      }
+      total
+    }
+  }
+
+  query GetMappingAlias ($product:ID!, $retailer:ID){
+    GetMappingAlias(product: $product, retailer: $retailer){
+      total
+    }
+  }
+
+  mutation CreateAliasByManager($input: MappingAliasByManagerInput){
+    CreateAliasByManager(input:$input){
+      message
+    }
+  }

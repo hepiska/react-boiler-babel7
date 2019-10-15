@@ -1,5 +1,6 @@
   query GetUnAliasedReceipt ($input: GetRejectionReasonsInput!) {
     GetUnAliasedReceipt(input: $input) {
+      _id
       images{
       uri
     }

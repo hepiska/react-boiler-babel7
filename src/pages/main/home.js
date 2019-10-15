@@ -1,18 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import { ImageWrapper, Wrapper } from '@pomona/pomona3-ui/lib/atoms/basic'
 import Font from '@pomona/pomona3-ui/lib/atoms/fonts'
 import ImageColective from 'organisms/imageColective'
 import { GetUnAliasedReceipt } from 'graphqlQuery/receipt.gql'
+import { CreateAliasByManager } from 'graphqlQuery/product.gql'
 import { dateConstant } from 'utils/constants'
 import CircleLoader from "molecules/loaders/circle"
 import SelectProductCard from 'molecules/selectProductCard'
+import ErrorModal from 'organisms/errorModal'
+import Button from '@pomona/pomona3-ui/lib/atoms/buttons'
+
 
 
 
 const HomePage = () => {
+  const [localError, setLocalError] = useState(null)
+  const [aliasResponse, setAliasResponse] = useState(null)
+  const [aliasesInput, setAliasesInput] = useState([])
+  const [createAlias] = useMutation(CreateAliasByManager)
   const { loading, error, data } = useQuery(GetUnAliasedReceipt, { variables: { input: dateConstant } })
+
   if (loading) {
     return (
       <Wrapper>
@@ -20,27 +29,107 @@ const HomePage = () => {
       </Wrapper>
     )
   }
+
+  if (error) {
+    return (
+      <Wrapper>
+        {JSON.stringify(error)}
+      </Wrapper>
+    )
+
+  }
+
   const receipt = data.GetUnAliasedReceipt
+
+  const onError = (err) => {
+    setLocalError(err.message)
+  }
+  const onSubmit = async () => {
+    try {
+      const aliasData = aliasesInput.map(al => ({
+        product: al.product._id,
+        retailer: receipt.retailer._id,
+        alias: al.alias.corected
+      }))
+      // const createAliasInput = {}
+      const res = await createAlias({
+        variables: {
+          input: {
+            receipt_id: receipt._id,
+            aliases: aliasData
+          }
+        }
+      })
+      setAliasResponse(res.data.CreateAliasByManager.message)
+    } catch (err) {
+      setLocalError(err.message)
+    }
+  }
+
+  const getData = (productAlias) => {
+    setAliasesInput([...aliasesInput, productAlias])
+  }
+
+  const closeModal = () => {
+    setLocalError(null)
+  }
+  const closeResponse = () => {
+    setAliasResponse(null)
+  }
   return (
     <Wrapper>
       <Wrapper dDirection='row' width='100%' align='flex-start'>
         <Wrapper flex='2'>
           <ImageColective images={receipt.images.map(img => (img.uri))} />
         </Wrapper>
-        <Wrapper flex='3' dPadding='0px 32px' maxHeight='760px' justify='flex-start' align='flex-start'>
+        <Wrapper
+          flex='3'
+          maxHeight='760px'
+          justify='flex-start'
+          dPadding='0px 32px'
+          overflowY='scroll'
+          align='flex-start'
+        >
           <Font size='22px'>
             {`Retailer : ${receipt.retailer.name}`}
           </Font>
-          <Wrapper width='100%' margin='12px 0px'>
+          <Wrapper
+            width='100%'
+            margin='12px 0px'
+            dPadding='0px 8px'
+            overflow='scroll'
+            justify='flex-start'
+          >
             {
               receipt.prediction.products.map(product => (
-                <SelectProductCard product={product} />
+                <SelectProductCard
+                  id={product._id}
+                  checked={aliasesInput.find(al => al.alias.predicted === product.name)}
+                  product={product}
+                  retailer={receipt.retailer}
+                  onError={onError}
+                  getData={getData}
+                />
               ))
             }
           </Wrapper>
+          <Wrapper width='100%' direction='row'>
+            {/* <Button background='red' margin='0px 8px'>Get other Receipt</Button> */}
+            <Button margin='0px 8px' onClick={onSubmit}>Submit</Button>
+          </Wrapper>
         </Wrapper>
       </Wrapper>
-
+      <ErrorModal
+        isOpen={localError}
+        message={localError}
+        closeModal={closeModal}
+      />
+      <ErrorModal
+        isOpen={aliasResponse}
+        message={aliasResponse}
+        title='Response'
+        closeModal={closeResponse}
+      />
     </Wrapper>
   )
 }
