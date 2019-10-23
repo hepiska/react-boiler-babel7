@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+      <url>
+        <loc>https://web.pomona.id/</loc>
+        <lastmod>2019-01-18T10:07:41.979Z</lastmod>
+        <priority>0.5</priority>
+        <changefreq>weekly</changefreq>
+      </url>
+      
+      <url>
+        <loc>https://web.pomona.id/product-catalog</loc>
+        <lastmod>2019-01-18T10:07:41.979Z</lastmod>
+        <priority>0.5</priority>
+        <changefreq>weekly</changefreq>
+      </url>
+      
+      <url>
+        <loc>https://web.pomona.id/product-catalog/Makanan/5acd84a671fab359689caa48</loc>
+        <lastmod>2019-01-18T10:07:41.979Z</lastmod>
+        <priority>0.5</priority>
+        <changefreq>weekly</changefreq>
+      </url>
+      
+      <url>
+        <loc>https://web.pomona.id/product-catalog/Minuman/5acd838271fab359689c9e39</loc>
+        <lastmod>2019-01-18T10:07:41.979Z</lastmod>
+        <priority>0.5</priority>
+        <changefreq>weekly</changefreq>
+      </url>
+      
+      <url>
+        <loc>https://web.pomona.id/product-catalog/Minuman/5acd838271fab359689c9e39</loc>
+        <lastmod>2019-01-18T10:07:41.979Z</lastmod>
+        <priority>0.5</priority>
+        <changefreq>weekly</changefreq>
+      </url>
+      
+      <url>
+        <loc>https://web.pomona.id/product-catalog/Personal%20Care/5acd820971fab359689c8ec2</loc>
+        <lastmod>2019-01-18T10:07:41.979Z</lastmod>
+        <priority>0.5</priority>
+        <changefreq>weekly</changefreq>
+      </url>
+      
+      <url>
+        <loc>https://web.pomona.id/masuk</loc>
+        <lastmod>2019-01-18T10:07:41.979Z</lastmod>
+        <priority>0.5</priority>
+        <changefreq>weekly</changefreq>
+      </url>
+      
+      <url>
+        <loc>https://web.pomona.id/daftar</loc>
+        <lastmod>2019-01-18T10:07:41.979Z</lastmod>
+        <priority>0.5</priority>
+        <changefreq>weekly</changefreq>
+      </url>
+      
+      <url>
+        <loc>https://web.pomona.id/jobs</loc>
+        <lastmod>2019-01-18T10:07:41.979Z</lastmod>
+        <priority>0.5</priority>
+        <changefreq>weekly</changefreq>
+      </url>
+      
+      <url>
+        <loc>https://web.pomona.id/profile</loc>
+        <lastmod>2019-01-18T10:07:41.979Z</lastmod>
+        <priority>0.5</priority>
+        <changefreq>weekly</changefreq>
+      </url>
+      
+      <url>
+        <loc>https://web.pomona.id/brand</loc>
+        <lastmod>2019-01-18T10:07:41.979Z</lastmod>
+        <priority>0.5</priority>
+        <changefreq>weekly</changefreq>
+      </url>
+      </urlset>

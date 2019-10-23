@@ -1,4 +1,4 @@
-import React, { UseState, useState } from 'react'
+import React, { useState } from 'react'
 import { shadows } from '@pomona/pomona3-ui/lib/constants'
 import { withApollo } from 'react-apollo'
 import styled from 'styled-components'

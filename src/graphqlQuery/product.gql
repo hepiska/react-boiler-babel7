@@ -19,3 +19,13 @@
       message
     }
   }
+
+ mutation LogAliasNoProduct($alias:String!){
+    LogAliasNoProduct(alias:$alias){
+      message
+    }
+  }
+
+
+
+  

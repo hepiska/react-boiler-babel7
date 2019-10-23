@@ -2,6 +2,10 @@ const HtmlWebpackPlug = require('html-webpack-plugin')
 const webpack = require('webpack')
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const WebpackCompretion = require('compression-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 
 
@@ -12,7 +16,38 @@ const HtmlPlug = new HtmlWebpackPlug({
   template: './src/index.html',
   filename: './index.html'
 })
+// const swPlugin = new ServiceWorkerWebpackPlugin({
+//   entry: path.join(__dirname, 'public/OneSignalSDKWorker.js'),
+// })
 
+// copy src to dist
+const copyPlugin = new CopyWebpackPlugin([{ from: 'public' }])
+
+// gzip
+const gziPlugin = new WebpackCompretion({
+  filename(asset) {
+    const newAsset = asset.file.replace('.gz', '')
+    return newAsset
+  },
+  algorithm: 'gzip',
+  test: /\.(js)$/,
+  deleteOriginalAssets: false,
+})
+
+const uglifyjs = new UglifyJsPlugin({
+  cache: true,
+  parallel: true,
+  sourceMap: true, // set to true if you want JS source maps
+})
+
+const optimizeCssPlugin = new OptimizeCSSAssetsPlugin({})
+
+const cssPlugin = new MiniCssExtractPlugin({
+  // Options similar to the same options in webpackOptions.output
+  // both options are optional
+  filename: '[name].css',
+  chunkFilename: '[name].css',
+})
 
 const constant =
   targetEnv === 'prod'
@@ -124,10 +159,22 @@ module.exports = {
 
     ]
   },
-  plugins: [
-    constant,
-    HtmlPlug
-  ],
+  plugins: isProd
+    ? [
+      HtmlPlug,
+      constant,
+      cssPlugin,
+      // uglifyjs,
+      new webpack.optimize.AggressiveMergingPlugin(),
+      gziPlugin,
+      copyPlugin,
+      // new BundleAnalyzerPlugin(),
+      // manifestPlugin,
+      // SWplugins,
+    ] : [
+      constant,
+      HtmlPlug
+    ],
   resolve: {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     extensions: ['.js', '.jsx', ".css", '.gql'],

@@ -1,0 +1,7 @@
+User-Agent: *
+
+Disallow: /*?*q=
+Disallow: /forgot-password*
+Disallow: /dashboard.pomona.id/
+Disallow: /crm*
+Disallow: /index.html

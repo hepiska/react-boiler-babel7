@@ -5,7 +5,7 @@ import { ImageWrapper, Wrapper } from '@pomona/pomona3-ui/lib/atoms/basic'
 import Font from '@pomona/pomona3-ui/lib/atoms/fonts'
 import ImageColective from 'organisms/imageColective'
 import { GetUnAliasedReceipt } from 'graphqlQuery/receipt.gql'
-import { CreateAliasByManager } from 'graphqlQuery/product.gql'
+import { CreateAliasByManager, LogAliasNoProduct } from 'graphqlQuery/product.gql'
 import { dateConstant } from 'utils/constants'
 import CircleLoader from "molecules/loaders/circle"
 import SelectProductCard from 'molecules/selectProductCard'
@@ -22,6 +22,9 @@ const HomePage = () => {
   const [deletedProduct, setDeletedProduct] = useState([])
 
   const [createAlias] = useMutation(CreateAliasByManager)
+  const [logAlias] = useMutation(LogAliasNoProduct)
+
+
   const { loading, error, data, refetch } = useQuery(GetUnAliasedReceipt, {
     fetchPolicy: 'network-only',
     variables: { input: dateConstant }
@@ -45,6 +48,11 @@ const HomePage = () => {
   }
 
   const receipt = data.GetUnAliasedReceipt
+  // console.log(refetch)
+  if (!receipt.prediction.products || !receipt.retailer) {
+    refetch()
+    return null
+  }
 
   const onError = (err) => {
     setLocalError(err.message)
@@ -85,7 +93,11 @@ const HomePage = () => {
   }
 
   const onDeleteProduct = (product) => {
-    // need to call backend to set data on redis
+    logAlias({
+      variables: {
+        alias: product.name
+      }
+    })
     setDeletedProduct([...deletedProduct, product])
   }
 
@@ -120,7 +132,7 @@ const HomePage = () => {
             justify='flex-start'
           >
             {
-              receipt.prediction.products.filter(prod => !deletedProduct.find(delProd => delProd._id === prod._id)).map(product => (
+              receipt.prediction.products && receipt.prediction.products.filter(prod => !deletedProduct.find(delProd => delProd._id === prod._id)).map(product => (
                 <SelectProductCard
                   onRemoveProduct={onDeleteProduct}
                   key={product._id}
