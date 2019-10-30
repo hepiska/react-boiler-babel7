@@ -4,7 +4,7 @@ import { withApollo } from 'react-apollo'
 import styled from 'styled-components'
 import { SystemIcons } from '@pomona/pomona3-ui/lib/atoms'
 import { Wrapper, ImageWrapper } from '@pomona/pomona3-ui/lib/atoms/basic'
-import { GetAllProduct, GetMappingAlias } from 'graphqlQuery/product.gql'
+import { SearchProducts, GetMappingAlias } from 'graphqlQuery/product.gql'
 import { AsyncDropdown } from '@pomona/pomona3-ui/lib/atoms/dropdowns'
 import Button from '@pomona/pomona3-ui/lib/atoms/buttons'
 import Field from '@pomona/pomona3-ui/lib/atoms/fields'
@@ -93,7 +93,7 @@ const SelectProductCard = ({ product, retailer, getData, onError, onRemoveProduc
       setIsHaveSearch(true)
     }
     return props.client.query({
-      query: GetAllProduct,
+      query: SearchProducts,
       variables: {
         input: {
           skip,
@@ -102,7 +102,7 @@ const SelectProductCard = ({ product, retailer, getData, onError, onRemoveProduc
         }
       }
     }).then(res => {
-      return res.data.GetAllProduct.products.map(prod => ({ value: prod._id, name: prod.name }))
+      return res.data.SearchProducts.products.map(prod => ({ value: prod._id, name: prod.name }))
     })
   }
 

@@ -1,5 +1,5 @@
-  query GetAllProduct ($input: GetAllProductInput!) {
-    GetAllProduct(input: $input) {
+  query SearchProducts ($input: SearchProductInput!) {
+    SearchProducts(input: $input) {
       products{
       name
       _id
