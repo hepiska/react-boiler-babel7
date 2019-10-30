@@ -9,6 +9,9 @@
     "sync-stage-js": "aws s3 sync dist/js s3://alias-manager-stage/js --cache-control no-cache --content-encoding gzip",
     "sync-stage": "aws s3 sync dist/ s3://alias-manager-stage/ --cache-control no-cache --exclude js/*",
     "deploy-stage": "npm run build && npm run sync-stage && npm run sync-stage-js",
+    "sync-prod-js": "aws s3 sync dist/js s3://alias-manager-prod/js --cache-control no-cache --content-encoding gzip",
+    "sync-prod": "aws s3 sync dist/ s3://alias-manager-prod/ --cache-control no-cache --exclude js/*",
+    "deploy-prod": "npm run build && npm run sync-prod && npm run sync-prod-js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
