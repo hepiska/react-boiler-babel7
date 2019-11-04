@@ -40,7 +40,7 @@ const useStringInputAlias = (predictedAlias) => {
 }
 
 
-const SelectProductCard = ({ product, retailer, getData, onError, onRemoveProduct, checked, ...props }) => {
+const SelectProductCard = ({ product, retailer, getData, onError, onRemoveProduct, onCheckFail, checked, ...props }) => {
   const [{ corectedAlias, selectedProduct, loading, isHaveSearch },
     { changeCorectedAlias, chackIsSimilar, getSelectedData, setLoading, setIsHaveSearch
     }] = useStringInputAlias(product.name)
@@ -66,6 +66,7 @@ const SelectProductCard = ({ product, retailer, getData, onError, onRemoveProduc
       }
       const productInretailer = await checkProductInRetailer()
       if (productInretailer) {
+        onCheckFail(product)
         throw new Error(`alias untuk product ${selectedProduct.name} di retailer ${retailer.name} telah ada`)
       }
       getData({

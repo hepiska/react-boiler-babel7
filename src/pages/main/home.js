@@ -101,6 +101,11 @@ const HomePage = () => {
     setDeletedProduct([...deletedProduct, product])
   }
 
+
+  const onCheckFail = (product) => {
+    setDeletedProduct([...deletedProduct, product])
+  }
+
   const closeResponse = () => {
     refetch()
     setAliasResponse(null)
@@ -135,6 +140,7 @@ const HomePage = () => {
               receipt.prediction.products && receipt.prediction.products.filter(prod => !deletedProduct.find(delProd => delProd._id === prod._id)).map(product => (
                 <SelectProductCard
                   onRemoveProduct={onDeleteProduct}
+                  onCheckFail={onCheckFail}
                   key={product._id}
                   id={product._id}
                   checked={aliasesInput.find(al => al.alias.predicted === product.name)}

@@ -24,7 +24,7 @@ const LoginPage = (props) => {
     if (data.type === 'valid') {
       setFetching(true)
       try {
-        const loginRes = await loginMutate({ variables: { input: { ...data.data } } })
+        const loginRes = await loginMutate({ variables: { input: { ...data.data, platform: 'web' } } })
         props.LOGIN({ ...loginRes.data.Login, isAuth: true })
         props.history.push('/')
 
