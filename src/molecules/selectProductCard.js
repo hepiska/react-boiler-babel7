@@ -24,7 +24,7 @@ const useStringInputAlias = (predictedAlias) => {
 
   const chackIsSimilar = () => {
     const simDegree = stringSimilarity.compareTwoStrings(corectedAlias, predictedAlias)
-    return simDegree > 0.6
+    return simDegree > 0.5
   }
   const changeCorectedAlias = ({ target }) => {
     setCoredtedAlias(target.value)
@@ -57,9 +57,7 @@ const SelectProductCard = ({ product, retailer, getData, onError, onRemoveProduc
     try {
       setLoading(true)
       const isSimilar = chackIsSimilar()
-      if (!isSimilar) {
-        throw new Error('Predicted dan Corected Alias terlalu berbeda')
-      }
+
 
       if (!selectedProduct) {
         throw new Error('Pilih produk terlebih dahulu')
@@ -68,6 +66,9 @@ const SelectProductCard = ({ product, retailer, getData, onError, onRemoveProduc
       if (productInretailer) {
         onCheckFail(product)
         throw new Error(`alias untuk product ${selectedProduct.name} di retailer ${retailer.name} telah ada`)
+      }
+      if (!isSimilar) {
+        throw new Error('Predicted dan Corected Alias terlalu berbeda')
       }
       getData({
         product: { _id: selectedProduct.value, name: selectedProduct.name },
@@ -86,6 +87,14 @@ const SelectProductCard = ({ product, retailer, getData, onError, onRemoveProduc
 
   const onClose = () => {
     onRemoveProduct(product)
+  }
+
+  const copyHandler = (val) => () => {
+    navigator.clipboard.writeText(val)
+    document.getElementById('toast').classList.add("visible")
+    setTimeout(() => {
+      document.getElementById('toast').classList.remove("visible")
+    }, 1400)
   }
 
 
@@ -123,7 +132,21 @@ const SelectProductCard = ({ product, retailer, getData, onError, onRemoveProduc
         </Wrapper>
         <Wrapper dDirection='row' width='100%' dMargin='8px'>
           <Wrapper flex='1' margin='0px 8px'>
-            <Field label='Predicted Alias' disabled value={product.name} />
+            <Field
+              label='Predicted Alias'
+              disabled
+              value={product.name}
+              sideButton={(
+                <Button
+                  onClick={copyHandler(product.name)}
+                  size='content'
+                  margin='0px 8px'
+                  padding='6px'
+                >
+                  copy
+                </Button>
+              )}
+            />
           </Wrapper>
           <Wrapper flex='1' margin='0px 8px'>
             <Field label='Corected Alias' onChange={changeCorectedAlias} value={corectedAlias} />

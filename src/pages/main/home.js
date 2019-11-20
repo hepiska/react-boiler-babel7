@@ -10,6 +10,7 @@ import { dateConstant } from 'utils/constants'
 import CircleLoader from "molecules/loaders/circle"
 import SelectProductCard from 'molecules/selectProductCard'
 import ErrorModal from 'organisms/errorModal'
+import Toast from 'molecules/toast'
 import Button from '@pomona/pomona3-ui/lib/atoms/buttons'
 
 
@@ -106,12 +107,22 @@ const HomePage = () => {
     setDeletedProduct([...deletedProduct, product])
   }
 
+  const copyHandler = (val) => () => {
+    navigator.clipboard.writeText(val)
+    document.getElementById('toast').classList.add("visible")
+    setTimeout(() => {
+      document.getElementById('toast').classList.remove("visible")
+    }, 1400)
+  }
+
   const closeResponse = () => {
     refetch()
     setAliasResponse(null)
   }
   return (
     <Wrapper>
+      <Toast visible />
+
       <Wrapper dDirection='row' width='100%' align='flex-start'>
         <Wrapper flex='2'>
           <ImageColective images={receipt.images.map(img => (img.uri))} />
@@ -124,9 +135,20 @@ const HomePage = () => {
           overflowY='scroll'
           align='flex-start'
         >
-          <Font size='22px'>
-            {`Retailer : ${receipt.retailer.name}`}
-          </Font>
+          <Wrapper width='100%' direction='row' justify='space-between'>
+            <Font size='22px'>
+              {`Retailer : ${receipt.retailer.name}`}
+            </Font>
+            <Wrapper direction='row'>
+              <Font size='14px'>
+                {`Receipt ID : ${receipt._id}`}
+              </Font>
+              <Button onClick={copyHandler(receipt._id)} size='content' margin='0px 8px' padding='8px'>copy</Button>
+            </Wrapper>
+
+          </Wrapper>
+
+
           <Wrapper
             width='100%'
             margin='12px 0px'

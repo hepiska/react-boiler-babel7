@@ -58,7 +58,7 @@ const constant =
     })
     : new webpack.DefinePlugin({
       // CONF_BASE_URL: JSON.stringify('https://api.pomona.id/'), 
-      // CONF_BASE_URL: JSON.stringify('https://api.stage.pomona.id/'),
+      CONF_BASE_URL: JSON.stringify('https://api.stage.pomona.id/'),
       CONF_NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       CONF_POMONA_WEB: JSON.stringify('https://web.stage.pomona.id/'),
     })
