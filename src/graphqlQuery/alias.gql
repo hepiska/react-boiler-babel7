@@ -1,0 +1,7 @@
+  query GetAliasUserCount {
+    GetAliasUserCount{
+      start_at
+      end_at
+      count
+    }
+  }
