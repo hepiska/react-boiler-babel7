@@ -64,13 +64,12 @@ const HomePage = () => {
       if (deletedProduct.length - resAlias !== 0) {
         throw new Error('Proses semua alias sebelum melakukan submit')
       }
-
       const aliasData = aliasesInput.map(al => ({
         product: al.product._id,
         retailer: receipt.retailer._id,
+        predicted_alias: al.alias.predicted,
         alias: al.alias.corected
       }))
-      // const createAliasInput = {}
       const res = await createAlias({
         variables: {
           input: {
